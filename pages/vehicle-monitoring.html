@@ -1,0 +1,807 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>차량 모니터링 - 코레일 전동차 유지보수 대시보드</title>
+    <!-- FontAwesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="../css/main.css">
+    <link rel="stylesheet" href="../css/dashboard.css">
+    <link rel="stylesheet" href="../css/vehicle-monitoring.css">
+</head>
+<body>
+    <div class="app-container">
+        <!-- Sidebar Navigation -->
+        <nav class="sidebar">
+            <div class="sidebar-header">
+                <img src="../images/logo.png" alt="코레일 로고" class="logo">
+                <h1>유지보수 대시보드</h1>
+            </div>
+            <ul class="sidebar-menu">
+                <li>
+                    <a href="../index.html"><i class="fas fa-home"></i> 메인 대시보드</a>
+                </li>
+                <li class="active">
+                    <a href="vehicle-monitoring.html"><i class="fas fa-train"></i> 차량 모니터링</a>
+                </li>
+                <li>
+                    <a href="maintenance-plan.html"><i class="fas fa-calendar-alt"></i> 유지보수 계획</a>
+                </li>
+                <li>
+                    <a href="fault-diagnosis.html"><i class="fas fa-exclamation-triangle"></i> 고장 진단/예측</a>
+                </li>
+                <li>
+                    <a href="knowledge-base.html"><i class="fas fa-book"></i> 지식베이스</a>
+                </li>
+                <li>
+                    <a href="data-analysis.html"><i class="fas fa-chart-line"></i> 데이터 분석</a>
+                </li>
+                <li>
+                    <a href="admin.html"><i class="fas fa-cog"></i> 관리자 대시보드</a>
+                </li>
+            </ul>
+            <div class="sidebar-footer">
+                <div class="user-info">
+                    <img src="../images/user-avatar.png" alt="사용자 프로필" class="avatar">
+                    <div class="user-details">
+                        <p class="user-name">홍길동</p>
+                        <p class="user-role">정비사 책임자</p>
+                    </div>
+                </div>
+                <div class="footer-buttons">
+                    <button class="btn-settings"><i class="fas fa-cog"></i></button>
+                    <button class="btn-logout"><i class="fas fa-sign-out-alt"></i></button>
+                </div>
+            </div>
+        </nav>
+
+        <!-- Main Content Area -->
+        <main class="main-content">
+            <!-- Top Bar -->
+            <header class="top-bar">
+                <button class="menu-toggle">
+                    <i class="fas fa-bars"></i>
+                </button>
+                <div class="page-title">
+                    <h2>차량 모니터링</h2>
+                    <span class="current-time">2025년 5월 15일 목요일 14:30</span>
+                </div>
+                <div class="top-bar-actions">
+                    <div class="search-bar">
+                        <input type="text" placeholder="검색...">
+                        <button><i class="fas fa-search"></i></button>
+                    </div>
+                    <div class="notification-center">
+                        <button class="notification-toggle">
+                            <i class="fas fa-bell"></i>
+                            <span class="badge">12</span>
+                        </button>
+                        <div class="notification-dropdown">
+                            <div class="notification-header">
+                                <h3>알림 센터</h3>
+                                <button class="btn-mark-all">모두 읽음</button>
+                            </div>
+                            <ul class="notification-list">
+                                <li class="notification-item urgent">
+                                    <i class="fas fa-exclamation-circle"></i>
+                                    <div class="notification-content">
+                                        <h4>KTX 123 차량 제동장치 이상</h4>
+                                        <p>긴급 점검 필요 - 30분 전</p>
+                                    </div>
+                                </li>
+                                <li class="notification-item warning">
+                                    <i class="fas fa-exclamation-triangle"></i>
+                                    <div class="notification-content">
+                                        <h4>전동차 456 냉각시스템 성능 저하</h4>
+                                        <p>이상징후 감지 - 1시간 전</p>
+                                    </div>
+                                </li>
+                                <li class="notification-item info">
+                                    <i class="fas fa-info-circle"></i>
+                                    <div class="notification-content">
+                                        <h4>월간 유지보수 보고서 생성 완료</h4>
+                                        <p>검토 필요 - 3시간 전</p>
+                                    </div>
+                                </li>
+                            </ul>
+                            <div class="notification-footer">
+                                <a href="#">모든 알림 보기</a>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="user-menu">
+                        <button class="user-menu-toggle">
+                            <img src="../images/user-avatar.png" alt="사용자 프로필">
+                            <span>홍길동</span>
+                            <i class="fas fa-chevron-down"></i>
+                        </button>
+                    </div>
+                </div>
+            </header>
+
+            <!-- Vehicle Monitoring Content -->
+            <div class="dashboard-content">
+                <!-- Vehicle Monitoring Header -->
+                <div class="monitoring-header">
+                    <div class="filter-section">
+                        <div class="filter-group">
+                            <label>차종</label>
+                            <select id="train-type-filter">
+                                <option value="all">전체</option>
+                                <option value="ktx">KTX</option>
+                                <option value="emu">전동차</option>
+                                <option value="itx">ITX-새마을</option>
+                                <option value="mugunghwa">무궁화호</option>
+                                <option value="freight">화물열차</option>
+                            </select>
+                        </div>
+                        <div class="filter-group">
+                            <label>노선</label>
+                            <select id="route-filter">
+                                <option value="all">전체</option>
+                                <option value="kyungbu">경부선</option>
+                                <option value="honam">호남선</option>
+                                <option value="gyeongchun">경춘선</option>
+                                <option value="jungang">중앙선</option>
+                                <option value="gyeongui">경의선</option>
+                            </select>
+                        </div>
+                        <div class="filter-group">
+                            <label>상태</label>
+                            <select id="status-filter">
+                                <option value="all">전체</option>
+                                <option value="normal">정상</option>
+                                <option value="warning">주의</option>
+                                <option value="danger">위험</option>
+                                <option value="maintenance">정비중</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="view-options">
+                        <button class="view-toggle active" data-view="list">
+                            <i class="fas fa-list"></i> 목록
+                        </button>
+                        <button class="view-toggle" data-view="grid">
+                            <i class="fas fa-th-large"></i> 그리드
+                        </button>
+                        <button class="view-toggle" data-view="map">
+                            <i class="fas fa-map-marked-alt"></i> 지도
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Vehicle Grid/List Container -->
+                <div class="vehicle-container">
+                    <!-- Left Panel - Vehicle List -->
+                    <div class="vehicle-list-panel">
+                        <div class="panel-header">
+                            <h3>차량 목록</h3>
+                            <div class="panel-actions">
+                                <div class="sort-options">
+                                    <select id="sort-select">
+                                        <option value="id">차량번호</option>
+                                        <option value="status">상태</option>
+                                        <option value="lastMaintenance">최근 정비일</option>
+                                        <option value="nextMaintenance">다음 정비일</option>
+                                    </select>
+                                </div>
+                                <button class="btn-refresh"><i class="fas fa-sync-alt"></i></button>
+                            </div>
+                        </div>
+                        <div class="panel-content">
+                            <div class="search-filter">
+                                <input type="text" placeholder="차량 검색..." class="vehicle-search">
+                                <div class="filter-tags">
+                                    <span class="filter-tag normal">정상 <i class="fas fa-times"></i></span>
+                                    <span class="filter-tag warning">주의 <i class="fas fa-times"></i></span>
+                                    <span class="filter-tag danger">위험 <i class="fas fa-times"></i></span>
+                                </div>
+                            </div>
+                            <ul class="vehicle-list">
+                                <li class="vehicle-item selected" data-id="KTX-123">
+                                    <div class="status-indicator danger"></div>
+                                    <div class="vehicle-info">
+                                        <h4>KTX-123</h4>
+                                        <p>경부선 | 2019년식</p>
+                                    </div>
+                                    <div class="vehicle-status">
+                                        <span class="status danger">위험</span>
+                                        <p class="status-message">제동장치 이상</p>
+                                    </div>
+                                </li>
+                                <li class="vehicle-item" data-id="KTX-456">
+                                    <div class="status-indicator warning"></div>
+                                    <div class="vehicle-info">
+                                        <h4>KTX-456</h4>
+                                        <p>호남선 | 2020년식</p>
+                                    </div>
+                                    <div class="vehicle-status">
+                                        <span class="status warning">주의</span>
+                                        <p class="status-message">냉각시스템 성능 저하</p>
+                                    </div>
+                                </li>
+                                <li class="vehicle-item" data-id="EMU-789">
+                                    <div class="status-indicator normal"></div>
+                                    <div class="vehicle-info">
+                                        <h4>EMU-789</h4>
+                                        <p>경춘선 | 2021년식</p>
+                                    </div>
+                                    <div class="vehicle-status">
+                                        <span class="status normal">정상</span>
+                                        <p class="status-message">정상 운행중</p>
+                                    </div>
+                                </li>
+                                <li class="vehicle-item" data-id="KTX-101">
+                                    <div class="status-indicator info"></div>
+                                    <div class="vehicle-info">
+                                        <h4>KTX-101</h4>
+                                        <p>경부선 | 2018년식</p>
+                                    </div>
+                                    <div class="vehicle-status">
+                                        <span class="status info">정비중</span>
+                                        <p class="status-message">정기 점검</p>
+                                    </div>
+                                </li>
+                                <li class="vehicle-item" data-id="ITX-222">
+                                    <div class="status-indicator normal"></div>
+                                    <div class="vehicle-info">
+                                        <h4>ITX-222</h4>
+                                        <p>중앙선 | 2022년식</p>
+                                    </div>
+                                    <div class="vehicle-status">
+                                        <span class="status normal">정상</span>
+                                        <p class="status-message">정상 운행중</p>
+                                    </div>
+                                </li>
+                                <li class="vehicle-item" data-id="EMU-333">
+                                    <div class="status-indicator warning"></div>
+                                    <div class="vehicle-info">
+                                        <h4>EMU-333</h4>
+                                        <p>경의선 | 2019년식</p>
+                                    </div>
+                                    <div class="vehicle-status">
+                                        <span class="status warning">주의</span>
+                                        <p class="status-message">배터리 성능 저하</p>
+                                    </div>
+                                </li>
+                            </ul>
+                            <div class="pagination">
+                                <button class="btn-prev"><i class="fas fa-chevron-left"></i></button>
+                                <span class="page-info">1-6 / 350</span>
+                                <button class="btn-next"><i class="fas fa-chevron-right"></i></button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Right Panel - Vehicle Details -->
+                    <div class="vehicle-detail-panel">
+                        <div class="panel-header">
+                            <h3>차량 상세 정보</h3>
+                            <div class="panel-actions">
+                                <button class="btn-history"><i class="fas fa-history"></i> 이력</button>
+                                <button class="btn-report"><i class="fas fa-file-alt"></i> 보고서</button>
+                                <button class="btn-more"><i class="fas fa-ellipsis-v"></i></button>
+                            </div>
+                        </div>
+                        <div class="panel-content">
+                            <!-- Vehicle Summary -->
+                            <div class="vehicle-summary">
+                                <div class="vehicle-header">
+                                    <div class="vehicle-title">
+                                        <h3>KTX-123</h3>
+                                        <span class="status danger">위험</span>
+                                    </div>
+                                    <div class="vehicle-subtitle">
+                                        <p>경부선 | 서울-부산 구간 | 2019년식</p>
+                                    </div>
+                                </div>
+                                <div class="vehicle-stats">
+                                    <div class="stat-item">
+                                        <span class="stat-label">누적 주행거리</span>
+                                        <span class="stat-value">487,523 km</span>
+                                    </div>
+                                    <div class="stat-item">
+                                        <span class="stat-label">최근 정비일</span>
+                                        <span class="stat-value">2025-04-10</span>
+                                    </div>
+                                    <div class="stat-item">
+                                        <span class="stat-label">다음 정비일</span>
+                                        <span class="stat-value urgent">2025-05-15</span>
+                                    </div>
+                                    <div class="stat-item">
+                                        <span class="stat-label">현재 상태</span>
+                                        <span class="stat-value danger">제동장치 이상</span>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Tabs for different sections -->
+                            <div class="detail-tabs">
+                                <button class="tab-btn active" data-tab="systems">시스템 상태</button>
+                                <button class="tab-btn" data-tab="sensors">센서 데이터</button>
+                                <button class="tab-btn" data-tab="maintenance">정비 이력</button>
+                                <button class="tab-btn" data-tab="structure">구조도</button>
+                            </div>
+
+                            <!-- Systems Status Tab -->
+                            <div class="tab-content active" id="systems-tab">
+                                <div class="system-gauges">
+                                    <div class="gauge-item danger">
+                                        <div class="gauge-container">
+                                            <canvas class="gauge-chart" data-value="35" data-max="100" data-color="#dc3545"></canvas>
+                                            <div class="gauge-label">35%</div>
+                                        </div>
+                                        <h4>제동 시스템</h4>
+                                    </div>
+                                    <div class="gauge-item warning">
+                                        <div class="gauge-container">
+                                            <canvas class="gauge-chart" data-value="65" data-max="100" data-color="#ffc107"></canvas>
+                                            <div class="gauge-label">65%</div>
+                                        </div>
+                                        <h4>냉각 시스템</h4>
+                                    </div>
+                                    <div class="gauge-item normal">
+                                        <div class="gauge-container">
+                                            <canvas class="gauge-chart" data-value="90" data-max="100" data-color="#28a745"></canvas>
+                                            <div class="gauge-label">90%</div>
+                                        </div>
+                                        <h4>엔진</h4>
+                                    </div>
+                                    <div class="gauge-item normal">
+                                        <div class="gauge-container">
+                                            <canvas class="gauge-chart" data-value="95" data-max="100" data-color="#28a745"></canvas>
+                                            <div class="gauge-label">95%</div>
+                                        </div>
+                                        <h4>전기 시스템</h4>
+                                    </div>
+                                </div>
+
+                                <div class="system-alerts">
+                                    <h4>시스템 알림</h4>
+                                    <ul class="alerts-list">
+                                        <li class="alert-item urgent">
+                                            <div class="alert-icon">
+                                                <i class="fas fa-exclamation-circle"></i>
+                                            </div>
+                                            <div class="alert-content">
+                                                <div class="alert-header">
+                                                    <h4>제동디스크 온도 상승</h4>
+                                                    <span class="alert-time">30분 전</span>
+                                                </div>
+                                                <p class="alert-description">우측 제동디스크 온도가 정상 범위를 초과했습니다. 긴급 점검이 필요합니다.</p>
+                                            </div>
+                                        </li>
+                                        <li class="alert-item warning">
+                                            <div class="alert-icon">
+                                                <i class="fas fa-exclamation-triangle"></i>
+                                            </div>
+                                            <div class="alert-content">
+                                                <div class="alert-header">
+                                                    <h4>냉각수 온도 상승</h4>
+                                                    <span class="alert-time">1시간 전</span>
+                                                </div>
+                                                <p class="alert-description">냉각수 온도가 점진적으로 상승하고 있습니다. 냉각 시스템 점검이 필요합니다.</p>
+                                            </div>
+                                        </li>
+                                    </ul>
+                                </div>
+
+                                <div class="action-buttons">
+                                    <button class="btn-primary">
+                                        <i class="fas fa-tools"></i> 정비 일정 예약
+                                    </button>
+                                    <button class="btn-secondary">
+                                        <i class="fas fa-exclamation-triangle"></i> 고장 진단
+                                    </button>
+                                    <button class="btn-secondary">
+                                        <i class="fas fa-history"></i> 이상 이력
+                                    </button>
+                                </div>
+                            </div>
+
+                            <!-- Sensor Data Tab -->
+                            <div class="tab-content" id="sensors-tab" style="display: none;">
+                                <div class="sensor-control">
+                                    <div class="timerange-selector">
+                                        <button class="timerange-btn active" data-range="1h">1시간</button>
+                                        <button class="timerange-btn" data-range="6h">6시간</button>
+                                        <button class="timerange-btn" data-range="24h">24시간</button>
+                                        <button class="timerange-btn" data-range="7d">7일</button>
+                                        <button class="timerange-btn" data-range="30d">30일</button>
+                                    </div>
+                                    <div class="sensor-filter">
+                                        <button class="btn-filter">
+                                            <i class="fas fa-filter"></i> 필터
+                                        </button>
+                                        <div class="date-picker">
+                                            <input type="date" class="date-input">
+                                        </div>
+                                    </div>
+                                </div>
+                                
+                                <div class="sensor-charts">
+                                    <!-- Temperature Chart -->
+                                    <div class="chart-container">
+                                        <div class="chart-header">
+                                            <h4>온도 센서 데이터</h4>
+                                            <div class="chart-actions">
+                                                <button class="btn-expand"><i class="fas fa-expand"></i></button>
+                                                <button class="btn-download"><i class="fas fa-download"></i></button>
+                                            </div>
+                                        </div>
+                                        <div class="chart-content">
+                                            <canvas id="temperatureChart"></canvas>
+                                        </div>
+                                        <div class="chart-legend">
+                                            <div class="legend-item">
+                                                <span class="legend-color" style="background-color: #dc3545;"></span>
+                                                <span class="legend-label">제동디스크 온도</span>
+                                            </div>
+                                            <div class="legend-item">
+                                                <span class="legend-color" style="background-color: #ffc107;"></span>
+                                                <span class="legend-label">냉각수 온도</span>
+                                            </div>
+                                            <div class="legend-item">
+                                                <span class="legend-color" style="background-color: #0064A4;"></span>
+                                                <span class="legend-label">엔진 온도</span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    
+                                    <!-- Pressure Chart -->
+                                    <div class="chart-container">
+                                        <div class="chart-header">
+                                            <h4>압력 센서 데이터</h4>
+                                            <div class="chart-actions">
+                                                <button class="btn-expand"><i class="fas fa-expand"></i></button>
+                                                <button class="btn-download"><i class="fas fa-download"></i></button>
+                                            </div>
+                                        </div>
+                                        <div class="chart-content">
+                                            <canvas id="pressureChart"></canvas>
+                                        </div>
+                                        <div class="chart-legend">
+                                            <div class="legend-item">
+                                                <span class="legend-color" style="background-color: #dc3545;"></span>
+                                                <span class="legend-label">제동 압력</span>
+                                            </div>
+                                            <div class="legend-item">
+                                                <span class="legend-color" style="background-color: #0064A4;"></span>
+                                                <span class="legend-label">유압 시스템</span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    
+                                    <!-- Electrical Chart -->
+                                    <div class="chart-container">
+                                        <div class="chart-header">
+                                            <h4>전기 시스템 데이터</h4>
+                                            <div class="chart-actions">
+                                                <button class="btn-expand"><i class="fas fa-expand"></i></button>
+                                                <button class="btn-download"><i class="fas fa-download"></i></button>
+                                            </div>
+                                        </div>
+                                        <div class="chart-content">
+                                            <canvas id="electricalChart"></canvas>
+                                        </div>
+                                        <div class="chart-legend">
+                                            <div class="legend-item">
+                                                <span class="legend-color" style="background-color: #28a745;"></span>
+                                                <span class="legend-label">배터리 전압</span>
+                                            </div>
+                                            <div class="legend-item">
+                                                <span class="legend-color" style="background-color: #6f42c1;"></span>
+                                                <span class="legend-label">전력 소비량</span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                
+                                <div class="sensor-table">
+                                    <h4>센서 데이터 테이블</h4>
+                                    <div class="table-container">
+                                        <table>
+                                            <thead>
+                                                <tr>
+                                                    <th>시간</th>
+                                                    <th>센서</th>
+                                                    <th>값</th>
+                                                    <th>단위</th>
+                                                    <th>상태</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                <tr class="danger">
+                                                    <td>14:00:05</td>
+                                                    <td>제동디스크 온도</td>
+                                                    <td>175.2</td>
+                                                    <td>°C</td>
+                                                    <td><span class="status danger">위험</span></td>
+                                                </tr>
+                                                <tr class="warning">
+                                                    <td>14:00:05</td>
+                                                    <td>냉각수 온도</td>
+                                                    <td>95.8</td>
+                                                    <td>°C</td>
+                                                    <td><span class="status warning">주의</span></td>
+                                                </tr>
+                                                <tr>
+                                                    <td>14:00:05</td>
+                                                    <td>엔진 온도</td>
+                                                    <td>82.5</td>
+                                                    <td>°C</td>
+                                                    <td><span class="status normal">정상</span></td>
+                                                </tr>
+                                                <tr>
+                                                    <td>14:00:05</td>
+                                                    <td>배터리 전압</td>
+                                                    <td>24.2</td>
+                                                    <td>V</td>
+                                                    <td><span class="status normal">정상</span></td>
+                                                </tr>
+                                                <tr class="danger">
+                                                    <td>13:55:05</td>
+                                                    <td>제동디스크 온도</td>
+                                                    <td>168.7</td>
+                                                    <td>°C</td>
+                                                    <td><span class="status danger">위험</span></td>
+                                                </tr>
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                    <div class="table-actions">
+                                        <button class="btn-export">
+                                            <i class="fas fa-file-export"></i> 내보내기
+                                        </button>
+                                        <div class="pagination">
+                                            <button class="btn-prev"><i class="fas fa-chevron-left"></i></button>
+                                            <span class="page-info">1 / 10</span>
+                                            <button class="btn-next"><i class="fas fa-chevron-right"></i></button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Maintenance History Tab -->
+                            <div class="tab-content" id="maintenance-tab" style="display: none;">
+                                <div class="maintenance-filter">
+                                    <div class="date-range">
+                                        <label>기간</label>
+                                        <select>
+                                            <option value="90">최근 3개월</option>
+                                            <option value="180">최근 6개월</option>
+                                            <option value="365">최근 1년</option>
+                                            <option value="all">전체</option>
+                                        </select>
+                                    </div>
+                                    <div class="type-filter">
+                                        <label>유형</label>
+                                        <select>
+                                            <option value="all">전체</option>
+                                            <option value="preventive">예방 정비</option>
+                                            <option value="corrective">수리</option>
+                                            <option value="inspection">점검</option>
+                                        </select>
+                                    </div>
+                                </div>
+
+                                <div class="maintenance-timeline">
+                                    <div class="timeline-header">
+                                        <h4>정비 이력</h4>
+                                    </div>
+                                    <div class="timeline-items">
+                                        <div class="timeline-item">
+                                            <div class="timeline-dot corrective"></div>
+                                            <div class="timeline-content">
+                                                <div class="timeline-header">
+                                                    <h5>제동장치 부품 교체</h5>
+                                                    <span class="timeline-date">2025-04-10</span>
+                                                </div>
+                                                <p class="timeline-description">마모된 제동패드 및 제동디스크 교체 작업</p>
+                                                <div class="timeline-details">
+                                                    <span class="detail-item"><i class="fas fa-user"></i> 김영호</span>
+                                                    <span class="detail-item"><i class="fas fa-map-marker-alt"></i> B정비고</span>
+                                                    <span class="detail-item"><i class="fas fa-clock"></i> 4시간</span>
+                                                </div>
+                                                <button class="btn-toggle-details">상세 정보 <i class="fas fa-chevron-down"></i></button>
+                                            </div>
+                                        </div>
+                                        
+                                        <div class="timeline-item">
+                                            <div class="timeline-dot inspection"></div>
+                                            <div class="timeline-content">
+                                                <div class="timeline-header">
+                                                    <h5>정기 점검</h5>
+                                                    <span class="timeline-date">2025-03-20</span>
+                                                </div>
+                                                <p class="timeline-description">시스템 전반 정기 점검 및 상태 확인</p>
+                                                <div class="timeline-details">
+                                                    <span class="detail-item"><i class="fas fa-user"></i> 이철수</span>
+                                                    <span class="detail-item"><i class="fas fa-map-marker-alt"></i> A정비고</span>
+                                                    <span class="detail-item"><i class="fas fa-clock"></i> 2시간</span>
+                                                </div>
+                                                <button class="btn-toggle-details">상세 정보 <i class="fas fa-chevron-down"></i></button>
+                                            </div>
+                                        </div>
+                                        
+                                        <div class="timeline-item">
+                                            <div class="timeline-dot preventive"></div>
+                                            <div class="timeline-content">
+                                                <div class="timeline-header">
+                                                    <h5>냉각 시스템 정비</h5>
+                                                    <span class="timeline-date">2025-02-15</span>
+                                                </div>
+                                                <p class="timeline-description">냉각수 교체 및 냉각 시스템 세척</p>
+                                                <div class="timeline-details">
+                                                    <span class="detail-item"><i class="fas fa-user"></i> 박지성</span>
+                                                    <span class="detail-item"><i class="fas fa-map-marker-alt"></i> A정비고</span>
+                                                    <span class="detail-item"><i class="fas fa-clock"></i> 3시간</span>
+                                                </div>
+                                                <button class="btn-toggle-details">상세 정보 <i class="fas fa-chevron-down"></i></button>
+                                            </div>
+                                        </div>
+                                        
+                                        <div class="timeline-item">
+                                            <div class="timeline-dot corrective"></div>
+                                            <div class="timeline-content">
+                                                <div class="timeline-header">
+                                                    <h5>전기 시스템 수리</h5>
+                                                    <span class="timeline-date">2025-01-05</span>
+                                                </div>
+                                                <p class="timeline-description">배터리 교체 및 전기 시스템 진단</p>
+                                                <div class="timeline-details">
+                                                    <span class="detail-item"><i class="fas fa-user"></i> 김영호</span>
+                                                    <span class="detail-item"><i class="fas fa-map-marker-alt"></i> C정비고</span>
+                                                    <span class="detail-item"><i class="fas fa-clock"></i> 5시간</span>
+                                                </div>
+                                                <button class="btn-toggle-details">상세 정보 <i class="fas fa-chevron-down"></i></button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                
+                                <div class="maintenance-stats">
+                                    <div class="stats-header">
+                                        <h4>정비 통계</h4>
+                                    </div>
+                                    <div class="stats-content">
+                                        <div class="stats-chart">
+                                            <canvas id="maintenanceTypeChart"></canvas>
+                                        </div>
+                                        <div class="stats-summary">
+                                            <div class="summary-item">
+                                                <h5>총 정비 횟수</h5>
+                                                <p class="summary-value">27</p>
+                                            </div>
+                                            <div class="summary-item">
+                                                <h5>총 정비 시간</h5>
+                                                <p class="summary-value">108시간</p>
+                                            </div>
+                                            <div class="summary-item">
+                                                <h5>평균 가동률</h5>
+                                                <p class="summary-value">94.3%</p>
+                                            </div>
+                                            <div class="summary-item">
+                                                <h5>MTBF</h5>
+                                                <p class="summary-value">128일</p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Structure Tab -->
+                            <div class="tab-content" id="structure-tab" style="display: none;">
+                                <div class="structure-header">
+                                    <h4>KTX-123 차량 온톨로지 구조도</h4>
+                                    <div class="structure-controls">
+                                        <button class="btn-zoom-in"><i class="fas fa-search-plus"></i></button>
+                                        <button class="btn-zoom-out"><i class="fas fa-search-minus"></i></button>
+                                        <button class="btn-reset"><i class="fas fa-redo"></i></button>
+                                        <select class="view-mode">
+                                            <option value="system">시스템 중심</option>
+                                            <option value="component">구성요소 중심</option>
+                                            <option value="maintenance">정비 중심</option>
+                                        </select>
+                                    </div>
+                                </div>
+                                
+                                <div class="structure-visualization">
+                                    <div class="structure-diagram">
+                                        <!-- This would be an interactive diagram in a real implementation -->
+                                        <img src="../images/train-structure-diagram.png" alt="차량 구조도" class="structure-image">
+                                    </div>
+                                    
+                                    <div class="component-details">
+                                        <div class="component-header">
+                                            <h4>제동 시스템</h4>
+                                            <span class="status danger">위험</span>
+                                        </div>
+                                        
+                                        <div class="component-info">
+                                            <div class="info-item">
+                                                <span class="info-label">부품 코드</span>
+                                                <span class="info-value">BR-SYS-001</span>
+                                            </div>
+                                            <div class="info-item">
+                                                <span class="info-label">설치일</span>
+                                                <span class="info-value">2023-09-15</span>
+                                            </div>
+                                            <div class="info-item">
+                                                <span class="info-label">제조사</span>
+                                                <span class="info-value">현대로템</span>
+                                            </div>
+                                            <div class="info-item">
+                                                <span class="info-label">평균 수명</span>
+                                                <span class="info-value">5년</span>
+                                            </div>
+                                        </div>
+                                        
+                                        <div class="subcomponents">
+                                            <h5>구성요소</h5>
+                                            <ul class="subcomponent-list">
+                                                <li class="subcomponent-item danger">
+                                                    <span class="subcomponent-name">제동디스크</span>
+                                                    <span class="status danger">위험</span>
+                                                </li>
+                                                <li class="subcomponent-item normal">
+                                                    <span class="subcomponent-name">제동패드</span>
+                                                    <span class="status normal">정상</span>
+                                                </li>
+                                                <li class="subcomponent-item warning">
+                                                    <span class="subcomponent-name">유압 시스템</span>
+                                                    <span class="status warning">주의</span>
+                                                </li>
+                                                <li class="subcomponent-item normal">
+                                                    <span class="subcomponent-name">제동 제어장치</span>
+                                                    <span class="status normal">정상</span>
+                                                </li>
+                                            </ul>
+                                        </div>
+                                        
+                                        <div class="related-systems">
+                                            <h5>관련 시스템</h5>
+                                            <div class="relation-map">
+                                                <div class="relation-item">
+                                                    <span class="relation-name">차륜 시스템</span>
+                                                    <span class="relation-type">물리적 연결</span>
+                                                </div>
+                                                <div class="relation-item">
+                                                    <span class="relation-name">제어 시스템</span>
+                                                    <span class="relation-type">신호 연결</span>
+                                                </div>
+                                                <div class="relation-item">
+                                                    <span class="relation-name">전기 시스템</span>
+                                                    <span class="relation-type">전원 공급</span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        
+                                        <div class="component-actions">
+                                            <button class="btn-primary">
+                                                <i class="fas fa-tools"></i> 정비 매뉴얼
+                                            </button>
+                                            <button class="btn-secondary">
+                                                <i class="fas fa-history"></i> 부품 이력
+                                            </button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <!-- JS Libraries -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/chart.js/3.7.0/chart.min.js"></script>
+    
+    <!-- Custom JS -->
+    <script src="../js/main.js"></script>
+    <script src="../js/vehicle-monitoring.js"></script>
+</body>
+</html>

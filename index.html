@@ -1,0 +1,523 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>코레일 전동차 유지보수 대시보드</title>
+    <!-- FontAwesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <!-- Chart.js 라이브러리 -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/3.7.0/chart.min.js"></script>
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="css/main.css">
+    <link rel="stylesheet" href="css/dashboard.css">
+</head>
+<body>
+    <div class="app-container">
+        <!-- Sidebar Navigation -->
+        <nav class="sidebar">
+            <div class="sidebar-header">
+                <img src="images/logo.png" alt="코레일 로고" class="logo">
+                <h1>유지보수 대시보드</h1>
+            </div>
+            <ul class="sidebar-menu">
+                <li class="active">
+                    <a href="index.html"><i class="fas fa-home"></i> 메인 대시보드</a>
+                </li>
+                <li>
+                    <a href="pages/vehicle-monitoring.html"><i class="fas fa-train"></i> 차량 모니터링</a>
+                </li>
+                <li>
+                    <a href="pages/maintenance-plan.html"><i class="fas fa-calendar-alt"></i> 유지보수 계획</a>
+                </li>
+                <li>
+                    <a href="pages/fault-diagnosis.html"><i class="fas fa-exclamation-triangle"></i> 고장 진단/예측</a>
+                </li>
+                <li>
+                    <a href="pages/knowledge-base.html"><i class="fas fa-book"></i> 지식베이스</a>
+                </li>
+                <li>
+                    <a href="pages/data-analysis.html"><i class="fas fa-chart-line"></i> 데이터 분석</a>
+                </li>
+                <li>
+                    <a href="pages/admin.html"><i class="fas fa-cog"></i> 관리자 대시보드</a>
+                </li>
+            </ul>
+            <div class="sidebar-footer">
+                <div class="user-info">
+                    <div class="avatar-placeholder">
+                        <i class="fas fa-user"></i>
+                    </div>
+                    <div class="user-details">
+                        <p class="user-name">홍길동</p>
+                        <p class="user-role">정비사 책임자</p>
+                    </div>
+                </div>
+                <div class="footer-buttons">
+                    <button class="btn-settings"><i class="fas fa-cog"></i></button>
+                    <button class="btn-logout"><i class="fas fa-sign-out-alt"></i></button>
+                </div>
+            </div>
+        </nav>
+
+        <!-- Main Content Area -->
+        <main class="main-content">
+            <!-- Top Bar -->
+            <header class="top-bar">
+                <button class="menu-toggle">
+                    <i class="fas fa-bars"></i>
+                </button>
+                <div class="page-title">
+                    <h2>메인 대시보드</h2>
+                    <span class="current-time">2025년 5월 15일 목요일 14:30</span>
+                </div>
+                <div class="top-bar-actions">
+                    <div class="search-bar">
+                        <input type="text" placeholder="검색...">
+                        <button><i class="fas fa-search"></i></button>
+                    </div>
+                    <div class="notification-center">
+                        <button class="notification-toggle">
+                            <i class="fas fa-bell"></i>
+                            <span class="badge">12</span>
+                        </button>
+                        <div class="notification-dropdown">
+                            <div class="notification-header">
+                                <h3>알림 센터</h3>
+                                <button class="btn-mark-all">모두 읽음</button>
+                            </div>
+                            <ul class="notification-list">
+                                <li class="notification-item urgent">
+                                    <i class="fas fa-exclamation-circle"></i>
+                                    <div class="notification-content">
+                                        <h4>KTX 123 차량 제동장치 이상</h4>
+                                        <p>긴급 점검 필요 - 30분 전</p>
+                                    </div>
+                                </li>
+                                <li class="notification-item warning">
+                                    <i class="fas fa-exclamation-triangle"></i>
+                                    <div class="notification-content">
+                                        <h4>전동차 456 냉각시스템 성능 저하</h4>
+                                        <p>이상징후 감지 - 1시간 전</p>
+                                    </div>
+                                </li>
+                                <li class="notification-item info">
+                                    <i class="fas fa-info-circle"></i>
+                                    <div class="notification-content">
+                                        <h4>월간 유지보수 보고서 생성 완료</h4>
+                                        <p>검토 필요 - 3시간 전</p>
+                                    </div>
+                                </li>
+                            </ul>
+                            <div class="notification-footer">
+                                <a href="#">모든 알림 보기</a>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="user-menu">
+                        <button class="user-menu-toggle">
+                            <div class="avatar-placeholder small">
+                                <i class="fas fa-user"></i>
+                            </div>
+                            <span>홍길동</span>
+                            <i class="fas fa-chevron-down"></i>
+                        </button>
+                    </div>
+                </div>
+            </header>
+
+            <!-- Dashboard Content -->
+            <div class="dashboard-content">
+                <!-- Quick Info Cards -->
+                <section class="info-cards">
+                    <div class="card status-card">
+                        <div class="card-icon">
+                            <i class="fas fa-train"></i>
+                        </div>
+                        <div class="card-content">
+                            <h3>총 차량</h3>
+                            <p class="card-value">350 <span>대</span></p>
+                            <div class="status-breakdown">
+                                <span class="status normal">운행중: 280</span>
+                                <span class="status warning">정비중: 62</span>
+                                <span class="status danger">고장: 8</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="card performance-card">
+                        <div class="card-icon">
+                            <i class="fas fa-chart-line"></i>
+                        </div>
+                        <div class="card-content">
+                            <h3>월간 가용률</h3>
+                            <p class="card-value">94.8<span>%</span></p>
+                            <p class="card-change increase">
+                                <i class="fas fa-arrow-up"></i> 전월대비 1.2%
+                            </p>
+                        </div>
+                    </div>
+                    <div class="card maintenance-card">
+                        <div class="card-icon">
+                            <i class="fas fa-tools"></i>
+                        </div>
+                        <div class="card-content">
+                            <h3>금일 정비 일정</h3>
+                            <p class="card-value">28 <span>건</span></p>
+                            <div class="maintenance-breakdown">
+                                <span class="status normal">완료: 12</span>
+                                <span class="status warning">진행중: 8</span>
+                                <span class="status">예정: 8</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="card alert-card">
+                        <div class="card-icon">
+                            <i class="fas fa-exclamation-triangle"></i>
+                        </div>
+                        <div class="card-content">
+                            <h3>주요 알림</h3>
+                            <p class="card-value">12 <span>건</span></p>
+                            <div class="alert-breakdown">
+                                <span class="status danger">긴급: 3</span>
+                                <span class="status warning">경고: 5</span>
+                                <span class="status info">정보: 4</span>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- Main Dashboard Sections -->
+                <section class="dashboard-grid">
+                    <!-- Train Status Overview -->
+                    <div class="dashboard-panel train-status">
+                        <div class="panel-header">
+                            <h3>열차 상태 현황</h3>
+                            <div class="panel-actions">
+                                <button class="btn-refresh"><i class="fas fa-sync-alt"></i></button>
+                                <button class="btn-expand"><i class="fas fa-expand"></i></button>
+                                <button class="btn-more"><i class="fas fa-ellipsis-v"></i></button>
+                            </div>
+                        </div>
+                        <div class="panel-content">
+                            <div class="status-charts">
+                                <div class="chart-container donut-chart">
+                                    <canvas id="statusDonutChart"></canvas>
+                                    <div class="chart-center-text">
+                                        <h4>350</h4>
+                                        <p>총 차량</p>
+                                    </div>
+                                </div>
+                                <div class="chart-container bar-chart">
+                                    <canvas id="trainTypeBarChart"></canvas>
+                                </div>
+                            </div>
+                            <div class="status-legend">
+                                <div class="legend-item">
+                                    <span class="legend-color normal"></span>
+                                    <span class="legend-label">정상 운행</span>
+                                    <span class="legend-value">280 (80%)</span>
+                                </div>
+                                <div class="legend-item">
+                                    <span class="legend-color warning"></span>
+                                    <span class="legend-label">예정 정비</span>
+                                    <span class="legend-value">42 (12%)</span>
+                                </div>
+                                <div class="legend-item">
+                                    <span class="legend-color info"></span>
+                                    <span class="legend-label">진행중 정비</span>
+                                    <span class="legend-value">20 (5.7%)</span>
+                                </div>
+                                <div class="legend-item">
+                                    <span class="legend-color danger"></span>
+                                    <span class="legend-label">고장</span>
+                                    <span class="legend-value">8 (2.3%)</span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="panel-footer">
+                            <a href="pages/vehicle-monitoring.html" class="btn-view-all">차량 모니터링 화면으로 이동 <i class="fas fa-arrow-right"></i></a>
+                        </div>
+                    </div>
+
+                    <!-- Alerts & Notifications -->
+                    <div class="dashboard-panel alerts">
+                        <div class="panel-header">
+                            <h3>알림 센터</h3>
+                            <div class="panel-actions">
+                                <button class="btn-refresh"><i class="fas fa-sync-alt"></i></button>
+                                <button class="btn-expand"><i class="fas fa-expand"></i></button>
+                                <button class="btn-more"><i class="fas fa-ellipsis-v"></i></button>
+                            </div>
+                        </div>
+                        <div class="panel-content">
+                            <div class="alerts-filter">
+                                <button class="filter-btn active" data-filter="all">전체</button>
+                                <button class="filter-btn" data-filter="urgent">긴급</button>
+                                <button class="filter-btn" data-filter="warning">경고</button>
+                                <button class="filter-btn" data-filter="info">정보</button>
+                            </div>
+                            <ul class="alerts-list">
+                                <li class="alert-item urgent">
+                                    <div class="alert-icon">
+                                        <i class="fas fa-exclamation-circle"></i>
+                                    </div>
+                                    <div class="alert-content">
+                                        <div class="alert-header">
+                                            <h4>KTX 123 제동장치 이상</h4>
+                                            <span class="alert-time">30분 전</span>
+                                        </div>
+                                        <p class="alert-description">제동디스크 온도 상승 감지. AI 분석 결과 95% 확률로 제동장치 결함 예측.</p>
+                                        <div class="alert-actions">
+                                            <button class="btn-details">상세 보기</button>
+                                            <button class="btn-acknowledge">확인</button>
+                                        </div>
+                                    </div>
+                                </li>
+                                <li class="alert-item warning">
+                                    <div class="alert-icon">
+                                        <i class="fas fa-exclamation-triangle"></i>
+                                    </div>
+                                    <div class="alert-content">
+                                        <div class="alert-header">
+                                            <h4>전동차 456 냉각시스템 성능 저하</h4>
+                                            <span class="alert-time">1시간 전</span>
+                                        </div>
+                                        <p class="alert-description">냉각수 온도 상승 패턴 감지. 72시간 내 정비 권장.</p>
+                                        <div class="alert-actions">
+                                            <button class="btn-details">상세 보기</button>
+                                            <button class="btn-acknowledge">확인</button>
+                                        </div>
+                                    </div>
+                                </li>
+                                <li class="alert-item info">
+                                    <div class="alert-icon">
+                                        <i class="fas fa-info-circle"></i>
+                                    </div>
+                                    <div class="alert-content">
+                                        <div class="alert-header">
+                                            <h4>월간 유지보수 보고서 생성 완료</h4>
+                                            <span class="alert-time">3시간 전</span>
+                                        </div>
+                                        <p class="alert-description">4월 유지보수 실적 보고서가 생성되었습니다. 검토 후 승인 필요.</p>
+                                        <div class="alert-actions">
+                                            <button class="btn-details">보고서 열기</button>
+                                            <button class="btn-acknowledge">확인</button>
+                                        </div>
+                                    </div>
+                                </li>
+                                <li class="alert-item warning">
+                                    <div class="alert-icon">
+                                        <i class="fas fa-exclamation-triangle"></i>
+                                    </div>
+                                    <div class="alert-content">
+                                        <div class="alert-header">
+                                            <h4>전동차 567 배터리 성능 저하</h4>
+                                            <span class="alert-time">5시간 전</span>
+                                        </div>
+                                        <p class="alert-description">배터리 충전 주기 단축 패턴 감지. 2주 내 배터리 교체 권장.</p>
+                                        <div class="alert-actions">
+                                            <button class="btn-details">상세 보기</button>
+                                            <button class="btn-acknowledge">확인</button>
+                                        </div>
+                                    </div>
+                                </li>
+                            </ul>
+                        </div>
+                        <div class="panel-footer">
+                            <a href="#" class="btn-view-all">모든 알림 보기 <i class="fas fa-arrow-right"></i></a>
+                        </div>
+                    </div>
+
+                    <!-- Maintenance Schedule -->
+                    <div class="dashboard-panel maintenance-schedule">
+                        <div class="panel-header">
+                            <h3>금일/금주 정비 계획</h3>
+                            <div class="panel-actions">
+                                <button class="btn-refresh"><i class="fas fa-sync-alt"></i></button>
+                                <button class="btn-expand"><i class="fas fa-expand"></i></button>
+                                <button class="btn-more"><i class="fas fa-ellipsis-v"></i></button>
+                            </div>
+                        </div>
+                        <div class="panel-content">
+                            <div class="schedule-nav">
+                                <button class="schedule-nav-btn active" data-view="day">오늘</button>
+                                <button class="schedule-nav-btn" data-view="week">이번 주</button>
+                                <button class="schedule-nav-btn" data-view="calendar">캘린더</button>
+                            </div>
+                            <div class="schedule-view active" id="day-view">
+                                <div class="timeline">
+                                    <div class="timeline-header">
+                                        <span>08:00</span>
+                                        <span>10:00</span>
+                                        <span>12:00</span>
+                                        <span>14:00</span>
+                                        <span>16:00</span>
+                                        <span>18:00</span>
+                                    </div>
+                                    <div class="timeline-current-time" style="left: 60%;">
+                                        <div class="time-indicator"></div>
+                                        <span class="time-label">14:30</span>
+                                    </div>
+                                    <div class="timeline-events">
+                                        <div class="timeline-event completed" style="left: 5%; width: 20%;">
+                                            <div class="event-content">
+                                                <h4>KTX 789 정기 점검</h4>
+                                                <p>08:00 - 10:00 | 이철수</p>
+                                            </div>
+                                        </div>
+                                        <div class="timeline-event in-progress" style="left: 35%; width: 15%;">
+                                            <div class="event-content">
+                                                <h4>KTX 456 제동장치 교체</h4>
+                                                <p>12:00 - 14:00 | 김영호</p>
+                                            </div>
+                                        </div>
+                                        <div class="timeline-event" style="left: 65%; width: 25%;">
+                                            <div class="event-content">
+                                                <h4>전동차 123 에어컨 정비</h4>
+                                                <p>15:00 - 18:00 | 박지성</p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="schedule-list">
+                                    <div class="schedule-item completed">
+                                        <div class="time-range">
+                                            <span class="time">08:00 - 10:00</span>
+                                            <span class="status">완료</span>
+                                        </div>
+                                        <div class="item-details">
+                                            <h4>KTX 789 정기 점검</h4>
+                                            <p>담당: 이철수 | 위치: A정비고</p>
+                                        </div>
+                                        <button class="btn-item-action"><i class="fas fa-ellipsis-v"></i></button>
+                                    </div>
+                                    <div class="schedule-item in-progress">
+                                        <div class="time-range">
+                                            <span class="time">12:00 - 14:00</span>
+                                            <span class="status">진행중</span>
+                                        </div>
+                                        <div class="item-details">
+                                            <h4>KTX 456 제동장치 교체</h4>
+                                            <p>담당: 김영호 | 위치: B정비고</p>
+                                        </div>
+                                        <button class="btn-item-action"><i class="fas fa-ellipsis-v"></i></button>
+                                    </div>
+                                    <div class="schedule-item">
+                                        <div class="time-range">
+                                            <span class="time">15:00 - 18:00</span>
+                                            <span class="status">예정</span>
+                                        </div>
+                                        <div class="item-details">
+                                            <h4>전동차 123 에어컨 정비</h4>
+                                            <p>담당: 박지성 | 위치: A정비고</p>
+                                        </div>
+                                        <button class="btn-item-action"><i class="fas fa-ellipsis-v"></i></button>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="schedule-view" id="week-view" style="display: none;">
+                                <!-- 주간 일정 내용 -->
+                            </div>
+                            <div class="schedule-view" id="calendar-view" style="display: none;">
+                                <!-- 캘린더 일정 내용 -->
+                            </div>
+                        </div>
+                        <div class="panel-footer">
+                            <a href="pages/maintenance-plan.html" class="btn-view-all">유지보수 계획 화면으로 이동 <i class="fas fa-arrow-right"></i></a>
+                        </div>
+                    </div>
+
+                    <!-- KPI Dashboard -->
+                    <div class="dashboard-panel kpi-dashboard">
+                        <div class="panel-header">
+                            <h3>주요 KPI 대시보드</h3>
+                            <div class="panel-actions">
+                                <button class="btn-refresh"><i class="fas fa-sync-alt"></i></button>
+                                <button class="btn-expand"><i class="fas fa-expand"></i></button>
+                                <button class="btn-more"><i class="fas fa-ellipsis-v"></i></button>
+                            </div>
+                        </div>
+                        <div class="panel-content">
+                            <div class="kpi-items">
+                                <div class="kpi-item">
+                                    <div class="kpi-label">
+                                        <h4>고장 예측 정확도</h4>
+                                        <i class="fas fa-info-circle" title="지난 30일간 발생한 고장 중 사전 예측 성공 비율"></i>
+                                    </div>
+                                    <div class="kpi-value">
+                                        <div class="gauge-chart">
+                                            <canvas id="predictAccuracyGauge"></canvas>
+                                            <div class="gauge-value">87%</div>
+                                        </div>
+                                    </div>
+                                    <div class="kpi-trend increase">
+                                        <i class="fas fa-arrow-up"></i> 4.2%
+                                    </div>
+                                </div>
+                                <div class="kpi-item">
+                                    <div class="kpi-label">
+                                        <h4>예방 정비율</h4>
+                                        <i class="fas fa-info-circle" title="전체 정비 작업 중 예방적 정비 작업 비율"></i>
+                                    </div>
+                                    <div class="kpi-value">
+                                        <div class="gauge-chart">
+                                            <canvas id="preventiveMaintenanceGauge"></canvas>
+                                            <div class="gauge-value">76%</div>
+                                        </div>
+                                    </div>
+                                    <div class="kpi-trend increase">
+                                        <i class="fas fa-arrow-up"></i> 5.8%
+                                    </div>
+                                </div>
+                                <div class="kpi-item">
+                                    <div class="kpi-label">
+                                        <h4>평균 수리 시간(MTTR)</h4>
+                                        <i class="fas fa-info-circle" title="고장 발생부터 수리 완료까지 평균 소요 시간"></i>
+                                    </div>
+                                    <div class="kpi-value">
+                                        <div class="gauge-chart">
+                                            <canvas id="mttrGauge"></canvas>
+                                            <div class="gauge-value">4.2h</div>
+                                        </div>
+                                    </div>
+                                    <div class="kpi-trend decrease">
+                                        <i class="fas fa-arrow-down"></i> 0.8h
+                                    </div>
+                                </div>
+                                <div class="kpi-item">
+                                    <div class="kpi-label">
+                                        <h4>정비 일정 준수율</h4>
+                                        <i class="fas fa-info-circle" title="계획된 일정 내 완료된 정비 작업 비율"></i>
+                                    </div>
+                                    <div class="kpi-value">
+                                        <div class="gauge-chart">
+                                            <canvas id="scheduleAdherenceGauge"></canvas>
+                                            <div class="gauge-value">92%</div>
+                                        </div>
+                                    </div>
+                                    <div class="kpi-trend increase">
+                                        <i class="fas fa-arrow-up"></i> 2.1%
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="kpi-chart">
+                                <canvas id="kpiTrendChart"></canvas>
+                            </div>
+                        </div>
+                        <div class="panel-footer">
+                            <a href="pages/data-analysis.html" class="btn-view-all">데이터 분석 화면으로 이동 <i class="fas fa-arrow-right"></i></a>
+                        </div>
+                    </div>
+                </section>
+            </div>
+        </main>
+    </div>
+
+    <!-- JS Libraries -->
+    <!-- Chart.js는 이미 head에서 로드되었으므로 여기서는 제거 -->
+    
+    <!-- Custom JS -->
+    <script src="js/main.js"></script>
+    <script src="js/dashboard.js"></script>
+</body>
+</html>
